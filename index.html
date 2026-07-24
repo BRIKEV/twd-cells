@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#000000" />
     <title>twd-cells</title>
     <link rel="icon" href="images/favicon.svg" />
+
     <link rel="stylesheet" href="/src/css/main.css" />
   </head>
   <body>
@@ -15,5 +16,20 @@
     <noscript>Please enable JavaScript to view this website.</noscript>
 
     <script type="module" src="/src/components/app-index.ts"></script>
+    <script type="module">
+      if (import.meta.env.DEV) {
+        const { initTWD } = await import('twd-js/bundled');
+        const tests = import.meta.glob('./**/*.twd.test.js');
+
+        initTWD(tests, {
+          open: true,
+          position: 'left',
+          search: true,                    // Enable search/filter in the sidebar (default: false)
+          serviceWorker: true,             // Enable request mocking (default: true)
+          serviceWorkerUrl: '/src/mock-sw.js', // Custom service worker path (default: '/mock-sw.js')
+          // rootSelector: '#my-app',      // (Optional) Override the app root for screenDom queries
+        });
+      }
+    </script>
   </body>
 </html>

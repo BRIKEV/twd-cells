@@ -24,6 +24,7 @@
     "@playwright/test": "^1.45.0",
     "@types/node": "^20.14.5",
     "playwright": "^1.0.0",
+    "twd-js": "^1.8.2",
     "typescript": "^5.3.3",
     "vite": "^7.3.1"
   },
