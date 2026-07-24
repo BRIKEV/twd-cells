@@ -1,12 +1,13 @@
 import { twd, userEvent, screenDom } from 'twd-js';
 import { describe, it, beforeEach } from 'twd-js/runner';
-import { visit } from './support.js';
+import { visit, resetFavourites } from './support.js';
 import { API_BASE, koftaRecipe } from './mocks/recipes.js';
 
 describe('Favorite recipes page', () => {
   beforeEach(() => {
     twd.clearRequestMockRules();
     localStorage.clear();
+    resetFavourites(); // empty the shared favourites channel, regardless of test order
   });
 
   it('shows the empty state when there are no favorites', async () => {

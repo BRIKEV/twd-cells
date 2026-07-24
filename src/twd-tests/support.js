@@ -1,8 +1,22 @@
 import { twd, configureScreenDom } from 'twd-js';
+import { publish } from '@open-cells/core';
 
 // Dynamic route imports + a mocked network round-trip can take longer than
 // Testing Library's 1s default, so give async queries a little more room.
 configureScreenDom({ asyncUtilTimeout: 5000 });
+
+/**
+ * Reset the shared favourites state between tests.
+ *
+ * `localStorage.clear()` alone isn't enough: Open Cells keeps liked recipes in
+ * an in-memory channel (a ReplaySubject) that outlives a single test. We publish
+ * an empty set on that channel — the same `publish()` the app itself uses — which
+ * the app then persists back to localStorage. Call this in `beforeEach` so tests
+ * that touch favourites are independent of execution order.
+ */
+export function resetFavourites() {
+  publish('liked-recipes', new Set());
+}
 
 /**
  * Wait until the mock service worker is actually controlling the page.
