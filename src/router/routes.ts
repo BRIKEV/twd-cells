@@ -36,7 +36,7 @@ export const routes: RouteDefinition[] = [
   {
     path: '/not-found',
     name: 'not-found',
-    notFound: false,
+    notFound: true,
     component: 'not-found-page',
     action: async () => {
       await import('../pages/not-found/not-found-page.js');

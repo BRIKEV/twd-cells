@@ -1,0 +1,7 @@
+{
+  "url": "http://localhost:5174",
+  "timeout": 15000,
+  "coverage": false,
+  "headless": true,
+  "retryCount": 2
+}
