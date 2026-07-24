@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:5174",
+  "url": "http://localhost:5173",
   "timeout": 15000,
   "coverage": false,
   "headless": true,

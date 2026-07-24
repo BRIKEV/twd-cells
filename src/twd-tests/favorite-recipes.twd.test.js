@@ -31,15 +31,22 @@ describe('Favorite recipes page', () => {
     await visit(`/recipe/${koftaRecipe.idMeal}`);
     await screenDom.findByRole('heading', { name: koftaRecipe.strMeal });
 
-    // The favourite toggle is a Material Web <md-outlined-icon-button>. Its
-    // real <button> lives in the component's shadow root, so we reach across
-    // the shadow boundary to click it — exactly what a user's click hits.
-    const recipePage = document.querySelector('recipe-page');
-    const favouriteButton = recipePage.querySelector(
-      'md-outlined-icon-button[aria-label="Add receipe to favorite"]',
-    );
-    const innerButton = favouriteButton.shadowRoot.querySelector('button');
-    await userEvent.click(innerButton);
+    // Grab the favourite toggle — a Material Web <md-outlined-icon-button> —
+    // once the custom element has upgraded (its shadow root exists).
+    const favouriteToggle = await twd.waitFor(() => {
+      const el = document.querySelector(
+        'recipe-page md-outlined-icon-button[aria-label="Add receipe to favorite"]',
+      );
+      if (!el || !el.shadowRoot) throw new Error('favourite toggle is not ready yet');
+      return el;
+    });
+
+    // A Material toggle flips its `selected` state asynchronously after a
+    // synthetic click, and the page reads `event.target.selected` inside its
+    // click handler. So we put the toggle in its "favourited" state first, then
+    // click it — deterministically exercising the "add to favourites" path.
+    favouriteToggle.selected = true;
+    await userEvent.click(favouriteToggle);
 
     // The click flows through the Open Cells "liked-recipes" channel, which the
     // app persists to real localStorage.
