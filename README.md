@@ -40,8 +40,9 @@ npm run dev
 Open http://localhost:5173 — the **TWD sidebar** appears on the left in dev.
 Click any test to run it live against the app while you build.
 
-Tests live in [`src/twd-tests/`](src/twd-tests) and are picked up automatically
-(`./**/*.twd.test.js`, wired up in [`index.html`](index.html)).
+Tests live in [`src/twd-tests/`](src/twd-tests) and are discovered automatically
+(`./**/*.twd.test.{js,ts}`). TWD is wired up by its vite plugin in
+[`vite.config.ts`](vite.config.ts), so there is nothing to add to `index.html`.
 
 ### Run headless / in CI
 
@@ -54,6 +55,21 @@ npx twd-cli run
 ```
 
 Configuration lives in [`twd.config.json`](twd.config.json).
+
+### Code coverage
+
+`npm run dev:ci` serves the app with Istanbul instrumentation (via
+[`vite-plugin-istanbul`](https://www.npmjs.com/package/vite-plugin-istanbul)), so
+it exposes `window.__coverage__`. twd-cli collects it as-is:
+
+```bash
+npm run dev:ci           # instrumented dev server
+npx twd-cli run          # collects window.__coverage__ into .nyc_output/
+npm run coverage:report  # nyc -> text + HTML at coverage/index.html
+```
+
+No changes to twd-js or twd-cli. For apps whose build config is locked down, see
+[`docs/coverage-without-build-config.md`](docs/coverage-without-build-config.md).
 
 ---
 
@@ -120,8 +136,8 @@ small, but they're the difference between "tests don't run" and "tests just work
    directly (exactly what the app's own links do) and waits for the mock service
    worker to take control before navigating.
 
-3. **`#app-content` is the app root.** `rootSelector: '#app-content'` in
-   `initTWD` scopes `screenDom` queries to the Cells app container.
+3. **`#app-content` is the app root.** `rootSelector: '#app-content'` in the
+   TWD vite plugin scopes `screenDom` queries to the Cells app container.
 
 4. **Material Web toggles update `selected` asynchronously.** The favourite
    button flips its `selected` state *after* a synthetic click, while the page
