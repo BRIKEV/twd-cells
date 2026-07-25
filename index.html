@@ -15,21 +15,7 @@
 
     <noscript>Please enable JavaScript to view this website.</noscript>
 
+    <!-- TWD is wired up via the vite plugin in vite.config.ts (no entry-file changes needed). -->
     <script type="module" src="/src/components/app-index.ts"></script>
-    <script type="module">
-      if (import.meta.env.DEV) {
-        const { initTWD } = await import('twd-js/bundled');
-        const tests = import.meta.glob('./**/*.twd.test.js');
-
-        initTWD(tests, {
-          open: true,
-          position: 'left',
-          search: true,                    // Enable search/filter in the sidebar (default: false)
-          serviceWorker: true,             // Enable request mocking (default: true)
-          serviceWorkerUrl: '/mock-sw.js', // Served from public/ so its scope is the app root (/) and it can intercept every request
-          rootSelector: '#app-content',    // Open Cells mounts the app in <app-index id="app-content">, so scope screenDom queries there
-        });
-      }
-    </script>
   </body>
 </html>
