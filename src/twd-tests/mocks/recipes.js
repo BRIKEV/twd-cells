@@ -25,24 +25,42 @@ export const mockCategories = [
   },
 ];
 
-// random.php / lookup.php -> { meals: [ <full meal> ] }
-export const teriyakiRecipe = {
-  idMeal: '52772',
-  strMeal: 'Teriyaki Chicken Casserole',
-  strMealThumb: 'https://example.com/teriyaki.jpg',
-  strCategory: 'Chicken',
-  strArea: 'Japanese',
+// lookup.php?i=53010 -> { meals: [ <full meal> ] }
+// Real TheMealDB data (real image URL) so the recipe page renders cleanly for a
+// screenshot. The mock still serves it, so the test stays deterministic/offline.
+export const lambBurgersRecipe = {
+  idMeal: '53010',
+  strMeal: 'Lamb Tzatziki Burgers',
+  strMealThumb: 'https://www.themealdb.com/images/media/meals/k420tj1585565244.jpg',
+  strCategory: 'Lamb',
+  strArea: 'Greek',
+  strYoutube: 'https://www.youtube.com/watch?v=s7_TF4ZHjPc',
+  strIngredient1: 'Bulgur Wheat',
+  strMeasure1: '25g',
+  strIngredient2: 'Lamb Mince',
+  strMeasure2: '500g',
+  strIngredient3: 'Cumin',
+  strMeasure3: '1 tsp',
+  strIngredient4: 'Coriander',
+  strMeasure4: '1 tsp',
+  strIngredient5: 'Paprika',
+  strMeasure5: '1 tsp',
+  strIngredient6: 'Garlic',
+  strMeasure6: '1 clove finely chopped',
+  strIngredient7: 'Olive Oil',
+  strMeasure7: 'For frying',
+  strIngredient8: 'Bun',
+  strMeasure8: '4',
+  strIngredient9: 'Cucumber',
+  strMeasure9: 'Grated',
+  strIngredient10: 'Greek Yogurt',
+  strMeasure10: '200g',
+  strIngredient11: 'Mint',
+  strMeasure11: '2 tbs',
   strInstructions:
-    'Preheat oven to 350 degrees F.\nCombine soy sauce and water in a bowl.\nBake for 35 minutes and serve.',
-  strYoutube: 'https://www.youtube.com/watch?v=4aZr5hZXP_s',
-  strIngredient1: 'Soy Sauce',
-  strIngredient2: 'Water',
-  strIngredient3: 'Brown Sugar',
-  strMeasure1: '3/4 cup',
-  strMeasure2: '1/2 cup',
-  strMeasure3: '1/4 cup',
-  strIngredient4: '',
-  strMeasure4: '',
+    'Tip the bulghar into a pan, cover with water and boil for 10 mins. Drain really well in a sieve, pressing out any excess water.\n' +
+    'To make the tzatziki, squeeze and discard the juice from the cucumber, then mix into the yogurt with the chopped mint and a little salt.\n' +
+    'Work the bulghar into the lamb with the spices, garlic and seasoning, then shape into 4 burgers. Brush with a little oil and fry or barbecue for about 5 mins each side until cooked all the way through.',
 };
 
 // A second full recipe, used by the "add to favorites" flow so it doesn't
