@@ -2,11 +2,11 @@
 
 A small [Open Cells](https://www.opencells.dev) + [Lit](https://lit.dev) recipes
 app (built on Material Web components and TheMealDB API), used here to show how
-[**TWD — Test While Developing**](https://twd.dev) fits a real Cells application.
+[**TWD (Test While Developing)**](https://twd.dev) fits a real Cells application.
 
 > **The pitch, in one line:** TWD runs your tests *inside the real browser*,
 > against the real DOM, real Web Components (Shadow DOM and all), and real
-> `localStorage` — mocking only the network. No jsdom, no Shadow DOM shims, no
+> `localStorage`, mocking only the network. No jsdom, no Shadow DOM shims, no
 > re-implementing the runtime.
 
 ---
@@ -37,7 +37,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — the **TWD sidebar** appears on the left in dev.
+Open http://localhost:5173 and the **TWD sidebar** appears on the left in dev.
 Click any test to run it live against the app while you build.
 
 Tests live in [`src/twd-tests/`](src/twd-tests) and are discovered automatically
@@ -46,7 +46,7 @@ Tests live in [`src/twd-tests/`](src/twd-tests) and are discovered automatically
 
 ### Run headless / in CI
 
-The same tests run headless with [`twd-cli`](https://twd.dev/ci-execution) — no
+The same tests run headless with [`twd-cli`](https://twd.dev/ci-execution), no
 rewriting, no separate suite:
 
 ```bash
@@ -115,7 +115,7 @@ describe('Recipe page', () => {
 
 The favourites test is the one to show off: it clicks a Material Web toggle,
 lets the click travel through an Open Cells channel, and asserts the recipe was
-persisted to the browser's own `localStorage` — then navigates to the favourites
+persisted to the browser's own `localStorage`, then navigates to the favourites
 page and finds it listed. Nothing is stubbed but the network.
 
 ---
@@ -132,9 +132,8 @@ small, but they're the difference between "tests don't run" and "tests just work
 
 2. **Open Cells uses hashbang routing.** With `useHistory: false`, the router
    listens to `hashchange` on `#!/...` URLs, not the History API. The one helper
-   the tests need — [`visit()`](src/twd-tests/support.js) — drives `location.hash`
-   directly (exactly what the app's own links do) and waits for the mock service
-   worker to take control before navigating.
+   the tests need, [`visit()`](src/twd-tests/support.js), drives `location.hash`
+   directly, exactly what the app's own links do.
 
 3. **`#app-content` is the app root.** `rootSelector: '#app-content'` in the
    TWD vite plugin scopes `screenDom` queries to the Cells app container.
@@ -142,10 +141,10 @@ small, but they're the difference between "tests don't run" and "tests just work
 4. **Material Web toggles update `selected` asynchronously.** The favourite
    button flips its `selected` state *after* a synthetic click, while the page
    reads `event.target.selected` synchronously. The favourites test sets the
-   toggle's intended state, then clicks — a clean, deterministic interaction.
+   toggle's intended state, then clicks, a clean and deterministic interaction.
 
-None of these required changing how the app works (the one app tweak — marking
-`/not-found` as the real 404 route — is a genuine improvement).
+None of these required changing how the app works (the one app tweak, marking
+`/not-found` as the real 404 route, is a genuine improvement).
 
 ---
 
