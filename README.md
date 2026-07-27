@@ -40,6 +40,8 @@ npm run dev
 Open http://localhost:5173 and the **TWD sidebar** appears on the left in dev.
 Click any test to run it live against the app while you build.
 
+![TWD running the Cells app page tests in the browser, with the recipe page rendered beside the sidebar](docs/images/twd-execution.png)
+
 Tests live in [`src/twd-tests/`](src/twd-tests) and are discovered automatically
 (`./**/*.twd.test.{js,ts}`). TWD is wired up by its vite plugin in
 [`vite.config.ts`](vite.config.ts), so there is nothing to add to `index.html`.
@@ -54,7 +56,10 @@ rewriting, no separate suite:
 npx twd-cli run
 ```
 
-Configuration lives in [`twd.config.json`](twd.config.json).
+Configuration lives in [`twd.config.json`](twd.config.json). A GitHub Action
+([`.github/workflows/twd.yml`](.github/workflows/twd.yml)) runs the suite and
+collects coverage on every push and pull request, using the official
+[`BRIKEV/twd-cli` action](https://twd.dev/ci-execution).
 
 ### Code coverage
 
@@ -70,6 +75,8 @@ npm run coverage:report  # nyc -> text + HTML at coverage/index.html
 
 No changes to twd-js or twd-cli. For apps whose build config is locked down, see
 [`docs/coverage-without-build-config.md`](docs/coverage-without-build-config.md).
+
+![nyc coverage report generated from the in-browser tests](docs/images/coverage-report.png)
 
 ---
 

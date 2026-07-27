@@ -1,0 +1,42 @@
+name: TWD Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Start the instrumented dev server (COVERAGE=true) so the same run also
+      # produces code coverage. Use `npm run dev` instead if you only want tests.
+      - name: Start dev server
+        run: |
+          nohup npm run dev:ci > /dev/null 2>&1 &
+          npx wait-on http://localhost:5173
+
+      # Official TWD action: installs Chrome, runs twd-cli against the dev server,
+      # and (because twd.config.json has coverage: true) collects window.__coverage__.
+      - name: Run TWD tests
+        uses: BRIKEV/twd-cli/.github/actions/run@main
+
+      - name: Coverage report
+        run: npm run coverage:report
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
