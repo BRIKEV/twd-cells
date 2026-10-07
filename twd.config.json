@@ -2,8 +2,5 @@
   "url": "http://localhost:5173",
   "timeout": 15000,
   "coverage": true,
-  "coverageDir": "./coverage",
-  "nycOutputDir": "./.nyc_output",
-  "headless": true,
   "retryCount": 2
 }

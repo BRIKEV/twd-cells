@@ -5,3 +5,4 @@ coverage/
 .serena/
 *.local
 .DS_Store
+.twd/
