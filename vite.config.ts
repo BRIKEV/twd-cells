@@ -27,6 +27,7 @@ export default defineConfig({
         include: 'src/**/*',
         exclude: ['node_modules', 'src/twd-tests/**'],
         extension: ['.ts', '.js'],
+        checkProd: false,
       }),
   ],
 });

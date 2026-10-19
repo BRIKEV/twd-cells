@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:ci": "COVERAGE=true vite",
+    "dev:ci": "COVERAGE=true NODE_ENV=production vite",
     "build": "tsc && vite build",
     "preview": "npm run build && vite preview",
     "test": "playwright test",
